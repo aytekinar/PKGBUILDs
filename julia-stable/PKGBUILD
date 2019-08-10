@@ -14,8 +14,8 @@ sha256sums=('SKIP'
 options=('!strip' 'staticlibs')
 
 makedepends=('libatomic_ops' 'python' 'git' 'cmake>=3.4.3')
-depends=('openlibm>=0.5.5' 'openblas-lapack>=0.2.20' 'suitesparse>=4.1'
-         'arpack>=3.5.0' 'libgit2>=0.23' 'pcre2>=10.00' 'gmp>=5.0' 'mpfr>=3.0'
+depends=('openlibm>=0.5.5' 'openblas-lapack>=0.3.3' 'suitesparse>=4.1'
+         'arpack>=3.5.0' 'libgit2>=0.23' 'pcre2>=10.00' 'gmp>=5.0' 'mpfr>=4.0'
          'curl>=7.50' 'libssh2>=1.7' 'mbedtls>=2.2')
 
 provides=('julia')
