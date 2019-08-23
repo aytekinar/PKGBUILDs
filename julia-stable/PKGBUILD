@@ -1,5 +1,5 @@
 pkgname=julia-stable
-pkgver=1.1.1
+pkgver=1.2.0
 pkgrel=1
 pkgdesc='The Julia Language: A fresh approach to technical computing.'
 arch=('x86_64')
@@ -9,14 +9,14 @@ license=('MIT')
 source=("${pkgname}-${pkgver}::git+https://github.com/JuliaLang/Julia"
         "Make.user")
 sha256sums=('SKIP'
-            'b6e9c49e1b9e9529a81b2cb48feff34770351cd79abab2393eb16c29fca9f213')
+            '6850ab8894ba4938055db6d104b689fe33bac188dca45d72248c5abd4010bf60')
 
 options=('!strip' 'staticlibs')
 
 makedepends=('libatomic_ops' 'python' 'git' 'cmake>=3.4.3')
 depends=('openlibm>=0.5.5' 'openblas-lapack>=0.3.3' 'suitesparse>=4.1'
          'arpack>=3.5.0' 'libgit2>=0.23' 'pcre2>=10.00' 'gmp>=5.0' 'mpfr>=4.0'
-         'curl>=7.50' 'libssh2>=1.7' 'mbedtls>=2.2')
+         'curl>=7.50' 'libssh2>=1.7' 'mbedtls>=2.2' 'libutf8proc>=2.1')
 
 provides=('julia')
 conflicts=('julia')
@@ -37,4 +37,5 @@ package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   make DESTDIR=${pkgdir} prefix=/usr install
   mv ${pkgdir}/usr/etc ${pkgdir}/etc
+  rm ${pkgdir}/usr/share/icons/hicolor/icon-theme.cache
 }
