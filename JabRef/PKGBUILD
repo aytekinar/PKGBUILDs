@@ -1,0 +1,39 @@
+pkgname=jabref
+pkgver=r13251.18cf80f95d
+pkgrel=1
+pkgdesc='Graphical Java application for managing BibTeX and biblatex (.bib) databases.'
+arch=('x86_64')
+url='https://www.jabref.org'
+license=('MIT')
+
+source=("git+https://github.com/JabRef/jabref")
+sha256sums=('SKIP')
+
+makedepends=('gendesk' 'gradle' 'jdk-openjdk')
+
+provides=('jabref')
+conflicts=('jabref')
+
+prepare() {
+  gendesk ../PKGBUILD
+  sed 's|Exec=jabref|Exec=/opt/jabref/image/bin/JabRefMain|g' --in-place jabref.desktop
+}
+
+pkgver() {
+  cd "${pkgname}"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "${srcdir}/${pkgname}"
+  git submodule update --init
+  gradle jlink
+}
+
+package() {
+  cd "${srcdir}"
+  install -d "${pkgdir}/opt"
+  cp -R "${pkgname}/build" "${pkgdir}/opt/jabref"
+  install -D jabref.desktop "${pkgdir}/usr/share/applications/jabref.desktop"
+  install -D jabref.png "${pkgdir}/usr/share/pixmaps/jabref.desktop"
+}
