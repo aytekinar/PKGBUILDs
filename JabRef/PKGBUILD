@@ -16,7 +16,7 @@ conflicts=('jabref')
 
 prepare() {
   gendesk ../PKGBUILD
-  sed 's|Exec=jabref|Exec=/opt/jabref/image/bin/JabRefMain|g' --in-place jabref.desktop
+  sed 's|Exec=jabref|Exec=/opt/jabref/bin/JabRefMain|g' --in-place jabref.desktop
 }
 
 pkgver() {
@@ -28,13 +28,12 @@ build() {
   cd "${srcdir}/${pkgname}"
   git submodule update --init
   gradle jlink
-  strip --preserve-dates --strip-unneeded build/image/lib/server/libjvm.so
 }
 
 package() {
   cd "${srcdir}"
   install --directory "${pkgdir}/opt"
-  cp --recursive "${pkgname}/build" "${pkgdir}/opt/jabref"
+  cp --recursive "${pkgname}/build/image" "${pkgdir}/opt/jabref"
   install -D jabref.desktop "${pkgdir}/usr/share/applications/jabref.desktop"
   install -D jabref.png "${pkgdir}/usr/share/pixmaps/jabref.desktop"
 }
