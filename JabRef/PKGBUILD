@@ -1,5 +1,5 @@
 pkgname=jabref
-pkgver=r13251.18cf80f95d
+pkgver=r13256.a357bbd598
 pkgrel=1
 pkgdesc='Graphical Java application for managing BibTeX and biblatex (.bib) databases.'
 arch=('x86_64')
@@ -28,12 +28,13 @@ build() {
   cd "${srcdir}/${pkgname}"
   git submodule update --init
   gradle jlink
+  strip --preserve-dates --strip-unneeded build/image/lib/server/libjvm.so
 }
 
 package() {
   cd "${srcdir}"
-  install -d "${pkgdir}/opt"
-  cp -R "${pkgname}/build" "${pkgdir}/opt/jabref"
+  install --directory "${pkgdir}/opt"
+  cp --recursive "${pkgname}/build" "${pkgdir}/opt/jabref"
   install -D jabref.desktop "${pkgdir}/usr/share/applications/jabref.desktop"
   install -D jabref.png "${pkgdir}/usr/share/pixmaps/jabref.desktop"
 }
