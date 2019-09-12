@@ -9,7 +9,7 @@ license=('MIT')
 source=("git+https://github.com/JabRef/jabref")
 sha256sums=('SKIP')
 
-makedepends=('gendesk' 'gradle' 'jdk-openjdk')
+makedepends=('gendesk' 'gradle' 'jdk11-openjdk')
 
 provides=('jabref')
 conflicts=('jabref')
