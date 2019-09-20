@@ -1,5 +1,5 @@
 pkgname=jabref
-pkgver=r13256.a357bbd598
+pkgver=r13312.db96f88659
 pkgrel=1
 pkgdesc='Graphical Java application for managing BibTeX and biblatex (.bib) databases.'
 arch=('x86_64')
@@ -9,14 +9,13 @@ license=('MIT')
 source=("git+https://github.com/JabRef/jabref")
 sha256sums=('SKIP')
 
-makedepends=('gendesk' 'gradle' 'jdk11-openjdk')
+makedepends=('gendesk>=1.0.4' 'gradle' 'jdk11-openjdk')
 
 provides=('jabref')
 conflicts=('jabref')
 
 prepare() {
-  gendesk ../PKGBUILD
-  sed 's|Exec=jabref|Exec=/opt/jabref/bin/JabRefMain|g' --in-place jabref.desktop
+  gendesk --exec /opt/jabref/bin/JabRefMain ../PKGBUILD
 }
 
 pkgver() {
