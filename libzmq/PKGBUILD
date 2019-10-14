@@ -1,5 +1,5 @@
 pkgname=libzmq
-pkgver=4.2.5
+pkgver=4.3.2
 pkgrel=1
 pkgdesc='ZeroMQ core engine in C++'
 arch=('x86_64')
@@ -7,7 +7,7 @@ url='https://github.com/zeromq/libzmq'
 license=('LGPL')
 
 source=("https://github.com/zeromq/libzmq/archive/v${pkgver}.tar.gz")
-sha256sums=('f33807105ce47f684c26751ce4e27a708a83ce120cbabbc614c8df21252b238c')
+sha256sums=('02ecc88466ae38cf2c8d79f09cfd2675ba299a439680b64ade733e26a349edeb')
 
 options=('staticlibs')
 
@@ -36,10 +36,6 @@ check() {
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}/build"
   cmake --build . --target install
-  find ${pkgdir}/usr/lib64 -name "*.*"          \
-    -exec mv '{}' ${pkgdir}/usr/lib \;
-  rmdir ${pkgdir}/usr/lib64
-  sed --in-place "s/^prefix=.*/prefix=usr\//g"  \
-    ${pkgdir}/usr/lib/pkgconfig/libzmq.pc
+  sed --in-place 's/\(\S\+\)=\S\+usr/\1=\/usr/g' ${pkgdir}/usr/lib/pkgconfig/libzmq.pc
   mv ${pkgdir}/usr/doc ${pkgdir}/usr/share/doc
 }
