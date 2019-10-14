@@ -1,31 +1,33 @@
 pkgname=singularity-container
-pkgver=2.5.2
+pkgver=3.4.1
 pkgrel=1
 pkgdesc='Application containers for Linux'
 arch=('x86_64')
-url='https://www.sylabs.io/'
+url='https://www.sylabs.io/singularity/'
 license=('BSD')
 
-source=("https://github.com/singularityware/singularity/releases/download/${pkgver}/singularity-${pkgver}.tar.gz")
-sha256sums=('eca09dbf4de5e971404a31f24d6c90081aef77075f51be8b3eb15b8715d6805e')
+source=('git+https://github.com/sylabs/singularity')
+sha256sums=('SKIP')
 
 options=('staticlibs')
 
 optdepends=('squashfs-tools: Docker Hub support')
-depends=('python2' 'python3')
+makedepends=('go>=1.11')
 
 build() {
-  cd "${srcdir}/singularity-${pkgver}"
-  ./configure prefix=/opt/singularity
+  cd "${srcdir}/singularity"
+  git checkout -b install v${pkgver}
+  ./mconfig -p /opt/singularity -b build
+  cd ./build
   make --jobs `nproc`
 }
 
 check() {
-  cd "${srcdir}/singularity-${pkgver}"
+  cd "${srcdir}/singularity/build"
   make --jobs `nproc` check
 }
 
 package() {
-  cd "${srcdir}/singularity-${pkgver}"
+  cd "${srcdir}/singularity/build"
   make DESTDIR=${pkgdir} install
 }
