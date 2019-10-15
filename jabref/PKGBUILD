@@ -15,7 +15,8 @@ provides=('jabref')
 conflicts=('jabref')
 
 prepare() {
-  gendesk --exec /opt/jabref/bin/JabRefMain ../PKGBUILD
+  gendesk --categories "Office;Science;Literature" \
+          --exec /opt/jabref/bin/JabRef ../PKGBUILD
 }
 
 pkgver() {
