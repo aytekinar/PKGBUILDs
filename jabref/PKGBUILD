@@ -1,5 +1,5 @@
 pkgname=jabref
-pkgver=r13312.db96f88659
+pkgver=r13823.e251de5c50
 pkgrel=1
 pkgdesc='Graphical Java application for managing BibTeX and biblatex (.bib) databases.'
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('MIT')
 source=("git+https://github.com/JabRef/jabref")
 sha256sums=('SKIP')
 
-makedepends=('gendesk>=1.0.4' 'gradle' 'jdk11-openjdk')
+makedepends=('gendesk>=1.0.4' 'jdk-openjdk')
 
 provides=('jabref')
 conflicts=('jabref')
@@ -27,7 +27,7 @@ pkgver() {
 build() {
   cd "${srcdir}/${pkgname}"
   git submodule update --init
-  gradle jlink
+  ./gradlew jlink
 }
 
 package() {
